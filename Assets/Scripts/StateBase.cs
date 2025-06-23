@@ -5,18 +5,18 @@ using UnityEngine;
 public class StateBase 
 {
     
-    public virtual void OnstateEnter(object obj = null)
+    public virtual void OnStateEnter(object obj = null)
     {
         //Debug.Log(" state enter");
     }
 
 
-    public virtual void OnstateStay()
+    public virtual void OnStateStay()
     {
-        //Debug.Log(" state stay");
+        Debug.Log(" state stay");
     }
 
-    public virtual void OnstateExit()
+    public virtual void OnStateExit()
     {
         //Debug.Log(" state exit");
     }

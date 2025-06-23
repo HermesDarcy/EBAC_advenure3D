@@ -35,10 +35,10 @@ namespace Play.HD.StateMachines
             //Debug.Log(typeS);
             if (currentState != null)
             {
-                currentState.OnstateExit();
+                currentState.OnStateExit();
             }
             currentState = dictStates[typeS];
-            currentState.OnstateEnter();
+            currentState.OnStateEnter();
 
         }
 
@@ -47,7 +47,7 @@ namespace Play.HD.StateMachines
         {
             if (currentState != null)
             {
-                currentState.OnstateStay();
+                currentState.OnStateStay();
             }
 
 
