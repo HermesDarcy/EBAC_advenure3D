@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 5c95e056fc4935e49a6e54efe0ffba1b
+labels:
+- Character
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: inputplayer
+  assetBundleVariant: player1

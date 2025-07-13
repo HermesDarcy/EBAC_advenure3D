@@ -78,17 +78,28 @@ public class PlayerMove : MonoBehaviour
         playerAnim.SetBool("BackWalk", inputAxisVertical < -zonaMorta);
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        vSpeed -= gravity * Time.deltaTime;
+
+
+        if (charControl.isGrounded)
         {
-            vSpeed = jumpForce;
-            onState = states.Jump;
+            vSpeed = 0;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                vSpeed = jumpForce;
+                onState = states.Jump;
+            }
+
         }
+
         
+        speedVector.y = vSpeed;
+        charControl.Move(speedVector * Time.deltaTime);
+
         
-       
-        
-        
-        if ( inputAxisVertical > zonaMorta)
+
+
+        if ( inputAxisVertical > zonaMorta  )
         {
             if (Input.GetKey(keyRun))
             {
@@ -110,9 +121,8 @@ public class PlayerMove : MonoBehaviour
 
 
         
-        vSpeed -= gravity * Time.deltaTime;
-        speedVector.y = vSpeed;
-        charControl.Move(speedVector * Time.deltaTime);
+       
+       
 
 
 

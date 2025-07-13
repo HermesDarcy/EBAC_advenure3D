@@ -5,7 +5,8 @@ using UnityEngine;
 public class ProjectileBase : MonoBehaviour
 {
     public float timedestroy = 2f;
-    public float speed = 5f;
+    public float speed = 35f;
+    
 
 
     // Start is called before the first frame update
@@ -22,8 +23,12 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        Debug.Log("toque");
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("toque trigger");
+    }
 
 }
