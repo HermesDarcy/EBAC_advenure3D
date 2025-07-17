@@ -6,6 +6,7 @@ public class ProjectileBase : MonoBehaviour
 {
     public float timedestroy = 2f;
     public float speed = 35f;
+    public int toDamage = 1;
     
 
 
@@ -24,11 +25,20 @@ public class ProjectileBase : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("toque");
+        var damageable = collision.transform.GetComponent<IDamagem>();
+        if (damageable != null)
+        { 
+            damageable.Damage(toDamage);
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("toque trigger");
+        Debug.Log("toque trigger ");
+        
+
+
     }
 
 }
