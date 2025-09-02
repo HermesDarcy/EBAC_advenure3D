@@ -43,7 +43,7 @@ public class ShootTypes : ShootLimittPlayer
         {
             shootType = 3;
             shootAmont = 4;
-            angle = 10f;
+            angle = 15f;
             maxShoot = 5;
             currentShoot = 0;
         }
@@ -73,7 +73,10 @@ public class ShootTypes : ShootLimittPlayer
 
 
                 GameObject ball = Instantiate(projectil, localGum.transform);
+                ball.GetComponent<ProjectileBase>().targetTag = targetTag;
+
                 ball.transform.localPosition = Vector3.zero;
+                ball.transform.position = localGum.transform.position;
                 ball.transform.localEulerAngles = Vector3.zero + Vector3.up * (i % 2 == 0 ? angle : -angle) * mult;
                 ball.transform.parent = null;
             }

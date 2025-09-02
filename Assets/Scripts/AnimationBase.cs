@@ -9,7 +9,7 @@ namespace AnimationsHD
     {
         None,
         idle,
-        run,
+        patrol,
         attack,
         death
 

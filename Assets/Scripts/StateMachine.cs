@@ -30,7 +30,7 @@ namespace Play.HD.StateMachines
 
         }
 
-        public void SwithState(T typeS)
+        public void SwithState(T typeS, params object[] obj)
         {
             //Debug.Log(typeS);
             if (currentState != null)
@@ -38,7 +38,7 @@ namespace Play.HD.StateMachines
                 currentState.OnStateExit();
             }
             currentState = dictStates[typeS];
-            currentState.OnStateEnter();
+            currentState.OnStateEnter(obj);
 
         }
 

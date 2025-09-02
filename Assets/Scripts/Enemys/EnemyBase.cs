@@ -15,9 +15,12 @@ namespace Enemy_Alien
         public Ease easeBorn = Ease.OutBack;
         public AnimationBase animBase;
         public FlashColors flashColors;
-        public AnimeTypes AnimeTypes = AnimeTypes.idle;
+        public AnimeTypes animeTypes = AnimeTypes.idle;
         public Collider Collider;
         public ParticleSystem particlesOnAttack, particleBalls;
+        [SerializeField]
+        private Transform playerpos;
+        public bool faceToPlayer;
         private void Awake()
         {
             Init();
@@ -28,8 +31,13 @@ namespace Enemy_Alien
             ResetLife();
             OnBorn();
             particlesOnAttack.Stop() ;
-            playAnimeTrigger(AnimeTypes.idle);
+            animeTypes = AnimeTypes.patrol;
+            playAnimeTrigger(animeTypes);
+            
         }
+
+
+
 
         protected virtual void ResetLife()
         {
@@ -58,14 +66,24 @@ namespace Enemy_Alien
             particleBalls.Play();
             if (myLife < 1)
             {
+                animeTypes = AnimeTypes.death;
                 playAnimeTrigger(AnimeTypes.death);
                 Kill();
             }
         }
         void Start()
         {
-
+            playerpos = GameObject.FindAnyObjectByType<PlayerMove>().transform;
         }
+
+
+
+        public virtual void Update()
+        {
+            OnFace();
+        }
+
+
 
         #region Animations
 
@@ -92,13 +110,15 @@ namespace Enemy_Alien
         }
 
 
-
-
-        void Update()
+        public void Damage(int d, Vector3 dir)
         {
+            OnDamage(d);
+            transform.DOMove(transform.position - dir,.2f);
+        }
 
 
-
+        public void ListenerKeys()
+        {
             if (Input.GetKeyDown(KeyCode.K))
             {
                 OnDamage(2);
@@ -110,17 +130,28 @@ namespace Enemy_Alien
                 Init();
             }
 
-            if(Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.J))
             {
                 playAnimeTrigger(AnimeTypes.attack);
                 particlesOnAttack.Play();
             }
-
-            
         }
 
 
-       
+        public void OnFace()
+        {
+            if(faceToPlayer)
+            {
+                //transform.LookAt(playerpos);
+                transform.DOLookAt(playerpos.position, .2f, AxisConstraint.Y);
+            }
+            
+
+
+        }
+
+
+
 
     }
 }

@@ -1,15 +1,18 @@
+using DG.Tweening;
+using Enemy_Alien;
 using Play.HD.StateMachines;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviour, IDamagem
 {
     public float forceJump =10f;
     public float speed=5f, vSpeed = 5f , jumpForce = 10f, speedRun =1.5f;
-    
+    public List<FlashColors> flashColors = new List<FlashColors>();
     public float rotSpeed = 10f;
     public float gravity = 9.8f;
     public float zonaMorta = 0.2f;
@@ -60,7 +63,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        posStateMachine.SwithState(onState);
+        posStateMachine.SwithState(onState, this);
         moves();
     }
 
@@ -120,7 +123,7 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        
+
        
        
 
@@ -174,4 +177,30 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        EnemyBase enemyBase = collision.gameObject.GetComponent<EnemyBase>();
+        if (enemyBase != null)
+        {
+
+            Damage(1);
+        
+        
+        
+        }
+    }
+
+    public void Damage(int damage)
+    {
+        flashColors.ForEach(i => i.OnDamageFlash());
+    }
+
+    public void Damage(int d, Vector3 dir)
+    {
+        //OnDamage(d);
+        //Debug.Log("player damage");
+        transform.DOMove(transform.position - dir , .2f);
+        flashColors.ForEach(i => i.OnDamageFlash());
+    }
 }

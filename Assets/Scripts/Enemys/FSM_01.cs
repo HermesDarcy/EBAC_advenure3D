@@ -33,13 +33,13 @@ public class FSM_01 : MonoBehaviour
         posStateMachine.RegisterStates(states.Lose, new StateBase());
 
 
-        posStateMachine.SwithState(state);
+        posStateMachine.SwithState(state, this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        posStateMachine.SwithState(state);
+        posStateMachine.SwithState(state, this);
     }
 
 

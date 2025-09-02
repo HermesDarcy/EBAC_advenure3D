@@ -5,7 +5,7 @@ using UnityEngine;
 public class StateBase 
 {
     
-    public virtual void OnStateEnter(object obj = null)
+    public virtual void OnStateEnter(object[] obj)
     {
         //Debug.Log(" state enter");
     }

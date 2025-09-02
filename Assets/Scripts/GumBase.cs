@@ -9,8 +9,9 @@ public class GumBase : MonoBehaviour
     public GameObject localGum;
     public KeyCode keyGum;
     public float timetoProjectils = 0.2f;
+    public string targetTag;
     private Vector3 pos;
-    private float nextTime;
+    public float nextTime;
 
 
     private void Start()
@@ -18,8 +19,12 @@ public class GumBase : MonoBehaviour
         nextTime = Time.time + timetoProjectils;
     }
 
+    
 
-    void Update()
+
+    #region DEBUG
+    
+    public virtual void Update()
     {
         keysUpdate();
 
@@ -41,12 +46,13 @@ public class GumBase : MonoBehaviour
     }
 
     
+    #endregion
 
 
     protected virtual void shoot()
     {
         GameObject ball = Instantiate(projectil, pos, localGum.transform.rotation);
-        
+        ball.GetComponent<ProjectileBase>().targetTag = targetTag;
         
     }
 
