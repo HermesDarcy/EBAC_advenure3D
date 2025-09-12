@@ -42,7 +42,7 @@ public class UIShoot : MonoBehaviour
         //ball.fillAmount = 1 - (f/max);
     }
 
-
+   
 
 
 }

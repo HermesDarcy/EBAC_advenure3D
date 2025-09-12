@@ -8,8 +8,11 @@ using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour, IDamagem
+public class PlayerMove : MonoBehaviour , IDamagem
 {
+    public int lives, initLives;
+    public int checkPoint;
+    public Transform checkPointPos;
     public float forceJump =10f;
     public float speed=5f, vSpeed = 5f , jumpForce = 10f, speedRun =1.5f;
     public List<FlashColors> flashColors = new List<FlashColors>();
@@ -19,7 +22,11 @@ public class PlayerMove : MonoBehaviour, IDamagem
     public Animator playerAnim;
     private Rigidbody rb;
     public CharacterController charControl;
+    public List<Collider> colliders = new List<Collider>();
     public KeyCode keyRun=KeyCode.LeftShift;
+    public UI_updates uI_Updates;
+    private bool nonDeath = true;
+
 
     public enum states
     {
@@ -36,7 +43,7 @@ public class PlayerMove : MonoBehaviour, IDamagem
     }
 
     public states onState;
-    public StateMachine<states> posStateMachine = new StateMachine<states>();
+    //public StateMachine<states> posStateMachine = new StateMachine<states>();
 
 
 
@@ -44,6 +51,8 @@ public class PlayerMove : MonoBehaviour, IDamagem
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        checkPointPos = transform;
+        /*
         posStateMachine.Init();
         posStateMachine.RegisterStates(states.Init, new StateBase());
         posStateMachine.RegisterStates(states.Attack, new StatePlayerAttack());
@@ -55,7 +64,7 @@ public class PlayerMove : MonoBehaviour, IDamagem
         posStateMachine.RegisterStates(states.RotLeft, new StateBase());
         posStateMachine.RegisterStates(states.RotRight, new StateBase());
         posStateMachine.RegisterStates(states.Death, new StateBase());
-
+        */
 
         //posStateMachine.SwithState(onState);
     }
@@ -63,9 +72,25 @@ public class PlayerMove : MonoBehaviour, IDamagem
     // Update is called once per frame
     void Update()
     {
-        posStateMachine.SwithState(onState, this);
-        moves();
+        //posStateMachine.SwithState(onState, this);
+        
+        if(lives <= 0 && nonDeath == true)
+        {
+            //this.gameObject.SetActive(false);
+            playerAnim.SetTrigger("Death");
+            colliders.ForEach(i => i.enabled = false);
+            nonDeath = false;
+
+            //onState = states.Death;
+        }
+        else if(nonDeath == true) 
+        {
+            moves();
+        }
     }
+
+
+
 
 
 
@@ -183,17 +208,19 @@ public class PlayerMove : MonoBehaviour, IDamagem
         EnemyBase enemyBase = collision.gameObject.GetComponent<EnemyBase>();
         if (enemyBase != null)
         {
-
+            
             Damage(1);
-        
-        
+              
         
         }
     }
+    
 
     public void Damage(int damage)
     {
         flashColors.ForEach(i => i.OnDamageFlash());
+        lives -= damage;
+        uI_Updates.ValueLife(initLives, lives);
     }
 
     public void Damage(int d, Vector3 dir)
@@ -202,5 +229,33 @@ public class PlayerMove : MonoBehaviour, IDamagem
         //Debug.Log("player damage");
         transform.DOMove(transform.position - dir , .2f);
         flashColors.ForEach(i => i.OnDamageFlash());
+        lives -= d;
+        uI_Updates.ValueLife(initLives, lives);
     }
+
+
+    [NaughtyAttributes.Button]
+    private void ResSpaw()
+    {
+        nonDeath = false;
+        transform.position = checkPointPos.position;
+        playerAnim.SetTrigger("Idle");
+        
+        lives = initLives;
+        onState = states.Idle;
+        playerAnim.speed = 1;
+        uI_Updates.ValueLife(initLives, lives);
+        Invoke("onAlive", 2f);
+
+    }
+
+
+    private void onAlive()
+    {
+        colliders.ForEach(i => i.enabled = true);
+        nonDeath = true;
+    }
+
+
+
 }
