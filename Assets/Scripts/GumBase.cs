@@ -41,7 +41,7 @@ public class GumBase : MonoBehaviour
             pos = localGum.transform.position;
             shoot();
             nextTime = Time.time + timetoProjectils;
-            Debug.Log("key X");
+            //Debug.Log("key X");
         }
     }
 

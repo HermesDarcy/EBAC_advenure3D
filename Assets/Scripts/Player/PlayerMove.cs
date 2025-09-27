@@ -10,23 +10,25 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour , IDamagem
 {
+    
     public int lives, initLives;
     public int checkPoint;
+    [HideInInspector]
     public Transform checkPointPos;
     public float forceJump =10f;
-    public float speed=5f, vSpeed = 5f , jumpForce = 10f, speedRun =1.5f;
+    public float speed=5f, vSpeed = 5f , jumpForce = 10f, speedRun =2f;
     public List<FlashColors> flashColors = new List<FlashColors>();
     public float rotSpeed = 10f;
     public float gravity = 9.8f;
     public float zonaMorta = 0.2f;
     public Animator playerAnim;
-    private Rigidbody rb;
     public CharacterController charControl;
     public List<Collider> colliders = new List<Collider>();
     public KeyCode keyRun=KeyCode.LeftShift;
     public UI_updates uI_Updates;
     private bool nonDeath = true;
-
+    private bool onPause = false;
+    private Rigidbody rb;
 
     public enum states
     {
@@ -80,17 +82,30 @@ public class PlayerMove : MonoBehaviour , IDamagem
             playerAnim.SetTrigger("Death");
             colliders.ForEach(i => i.enabled = false);
             nonDeath = false;
+            Invoke("ResSpaw", 5f);
 
             //onState = states.Death;
         }
-        else if(nonDeath == true) 
+        else if(nonDeath == true && onPause == false) 
         {
             moves();
         }
     }
 
+    [NaughtyAttributes.Button]
+    public void PausePlayer()
+    {
+        StartCoroutine(ToTimePause());
+    }
 
-
+    IEnumerator ToTimePause()
+    {
+        onState = states.Idle;
+        onPause = true;
+        playerAnim.SetTrigger("Idle");
+        yield return new WaitForSeconds(3f);
+        onPause = !onPause;
+    }
 
 
 
@@ -210,8 +225,8 @@ public class PlayerMove : MonoBehaviour , IDamagem
         {
             
             Damage(1);
-              
-        
+            
+
         }
     }
     
@@ -219,18 +234,24 @@ public class PlayerMove : MonoBehaviour , IDamagem
     public void Damage(int damage)
     {
         flashColors.ForEach(i => i.OnDamageFlash());
+        PostProcessingManager.Instance.flashVignette();
+        ShekeCamera.Instance.OnShakeCam(5f,5f,.3f);
         lives -= damage;
         uI_Updates.ValueLife(initLives, lives);
+        PostProcessingManager.Instance.DownSaturation();
     }
 
     public void Damage(int d, Vector3 dir)
     {
         //OnDamage(d);
         //Debug.Log("player damage");
+        PostProcessingManager.Instance.flashVignette();
+        ShekeCamera.Instance.OnShakeCam(5f,5f,.6f);
         transform.DOMove(transform.position - dir , .2f);
         flashColors.ForEach(i => i.OnDamageFlash());
         lives -= d;
         uI_Updates.ValueLife(initLives, lives);
+        PostProcessingManager.Instance.DownSaturation();
     }
 
 
@@ -245,7 +266,8 @@ public class PlayerMove : MonoBehaviour , IDamagem
         onState = states.Idle;
         playerAnim.speed = 1;
         uI_Updates.ValueLife(initLives, lives);
-        Invoke("onAlive", 2f);
+        PostProcessingManager.Instance.resetSaturation();
+        Invoke("onAlive", 1f);
 
     }
 

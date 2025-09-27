@@ -46,7 +46,7 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("toque trigger ");
+        //Debug.Log("toque trigger ");
         
 
 

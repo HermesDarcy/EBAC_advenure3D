@@ -41,9 +41,11 @@ public class UI_updates : MonoBehaviour
         if (lf < 0) lf = 0;
         if (tween != null) tween.Kill();
         tween = imageLife.DOFillAmount( (float) lf / max, .5f).SetEase(ease);
-        //imageLife.fillAmount = lf / max;
         
+        Debug.Log(" life" + lf.ToString());
         
+
+
     }
 
 

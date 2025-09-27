@@ -65,6 +65,7 @@ public class ShootTypes : ShootLimittPlayer
         }
         else
         {
+            ShekeCamera.Instance.OnShakeCam(1f, 2f,.3f);
             int mult = 0;
             for (int i = 0; i < shootAmont; i++)
             {
