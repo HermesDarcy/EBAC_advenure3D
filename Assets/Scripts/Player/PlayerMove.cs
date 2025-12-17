@@ -8,6 +8,7 @@ using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public class PlayerMove : MonoBehaviour , IDamagem
 {
     
@@ -29,6 +30,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
     private bool nonDeath = true;
     private bool onPause = false;
     private Rigidbody rb;
+    private bool shield = false;
 
     public enum states
     {
@@ -103,7 +105,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
         onState = states.Idle;
         onPause = true;
         playerAnim.SetTrigger("Idle");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         onPause = !onPause;
     }
 
@@ -221,37 +223,70 @@ public class PlayerMove : MonoBehaviour , IDamagem
     private void OnCollisionEnter(Collision collision)
     {
         EnemyBase enemyBase = collision.gameObject.GetComponent<EnemyBase>();
-        if (enemyBase != null)
+        if (enemyBase != null && shield == false)
         {
             
             Damage(1);
-            
-
         }
+
+        if(collision.gameObject.CompareTag("shield"))
+        { 
+            collision.gameObject.SetActive(false);
+            shield = true;
+            uI_Updates.shieldOn();
+            Invoke("toblink", 10f);
+            Invoke("TimeShield", 15f);
+            
+        }
+
+
     }
     
+    
+
+    private void toblick()
+    {
+        uI_Updates.blinkImage();
+    }
+
+
+
+    private void TimeShield()
+    {
+        shield = false;
+        uI_Updates.shieldOff();
+    }
+
+
 
     public void Damage(int damage)
     {
-        flashColors.ForEach(i => i.OnDamageFlash());
-        PostProcessingManager.Instance.flashVignette();
-        ShekeCamera.Instance.OnShakeCam(5f,5f,.3f);
-        lives -= damage;
-        uI_Updates.ValueLife(initLives, lives);
-        PostProcessingManager.Instance.DownSaturation();
+        if (shield == false)
+        {
+            flashColors.ForEach(i => i.OnDamageFlash());
+            PostProcessingManager.Instance.flashVignette();
+            ShekeCamera.Instance.OnShakeCam(5f, 5f, .3f);
+            lives -= damage;
+            uI_Updates.ValueLife(initLives, lives);
+            PostProcessingManager.Instance.DownSaturation();
+        }
     }
 
     public void Damage(int d, Vector3 dir)
     {
-        //OnDamage(d);
-        //Debug.Log("player damage");
-        PostProcessingManager.Instance.flashVignette();
-        ShekeCamera.Instance.OnShakeCam(5f,5f,.6f);
-        transform.DOMove(transform.position - dir , .2f);
-        flashColors.ForEach(i => i.OnDamageFlash());
-        lives -= d;
-        uI_Updates.ValueLife(initLives, lives);
-        PostProcessingManager.Instance.DownSaturation();
+
+        if (shield == false)
+        {
+            //OnDamage(d);
+            //Debug.Log("player damage");
+            PostProcessingManager.Instance.flashVignette();
+            ShekeCamera.Instance.OnShakeCam(5f, 5f, .6f);
+            transform.DOMove(transform.position - dir, .2f);
+            flashColors.ForEach(i => i.OnDamageFlash());
+            lives -= d;
+            uI_Updates.ValueLife(initLives, lives);
+            PostProcessingManager.Instance.DownSaturation();
+        }
     }
 
 
@@ -278,6 +313,18 @@ public class PlayerMove : MonoBehaviour , IDamagem
         nonDeath = true;
     }
 
+
+    public void addlife(int x)
+    {
+        lives += x;
+    }
+
+    public void ResetLifes()
+    {
+        lives = initLives;
+        uI_Updates.ValueLife(initLives, lives);
+        PostProcessingManager.Instance.resetSaturation();
+    }
 
 
 }

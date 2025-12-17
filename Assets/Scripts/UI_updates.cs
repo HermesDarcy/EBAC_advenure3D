@@ -49,6 +49,39 @@ public class UI_updates : MonoBehaviour
     }
 
 
+    public void shieldOn()
+    {
+        imageLife.color = Color.yellow;
+    }
+
+    public void shieldOff()
+    {
+        imageLife.color = Color.white;
+    }
+
+    public void blinkImage()
+    {
+        StartCoroutine(ToBlink());
+    }
+
+    IEnumerator ToBlink()
+    {
+        float t = .3f;
+        
+        for(int i=0; i<=20;i++)
+        {
+            Debug.Log("white");
+            imageLife.DOColor(Color.white, t);
+            yield return new WaitForSeconds(t);
+            Debug.Log("yellow");
+            imageLife.DOColor(Color.yellow, t);
+            yield return new WaitForSeconds(t);
+        }
+        
+        
+
+    }
+
 
 
 }

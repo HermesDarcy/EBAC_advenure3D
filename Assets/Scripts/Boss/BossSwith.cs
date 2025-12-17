@@ -4,6 +4,7 @@ public class BossSwith : MonoBehaviour
 {
     public GameObject boss;
     public PlayerMove player;
+    public Color gizmoColor;
     private bool firstChange = true;
 
 
@@ -39,9 +40,10 @@ public class BossSwith : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = gizmoColor;
         
         Gizmos.DrawWireSphere(transform.position, 9.2f);
+        //Gizmos.DrawSphere(transform.position, 9.2f);
     }
 
 }
