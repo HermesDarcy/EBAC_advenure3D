@@ -34,7 +34,8 @@ namespace Benjathemaker
 
             // Adjust start and end scale based on initial scale
             startScale = initialScale;
-            endScale = initialScale * (endScale.magnitude / startScale.magnitude);
+            //endScale = initialScale * (endScale.magnitude / startScale.magnitude);
+            endScale = initialScale * 1.3f;
         }
 
         void Update()

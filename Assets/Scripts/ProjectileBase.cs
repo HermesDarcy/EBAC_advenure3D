@@ -35,6 +35,7 @@ public class ProjectileBase : MonoBehaviour
                 Vector3 dir = transform.position - collision.transform.position;
                 dir.Normalize();
                 dir.y = 0;
+                Debug.Log("damage1");
                 damageable.Damage(toDamage, dir);
                 Destroy(gameObject);
             }
@@ -47,7 +48,13 @@ public class ProjectileBase : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("toque trigger ");
-        
+        var damageable = other.transform.GetComponent<IDamagem>();
+        if (damageable != null)
+        {
+            damageable.Damage(toDamage);
+            Debug.Log("damage2");
+            Destroy(gameObject);
+        }
 
 
     }

@@ -235,18 +235,21 @@ public class PlayerMove : MonoBehaviour , IDamagem
             shield = true;
             uI_Updates.shieldOn();
             Invoke("toblink", 10f);
-            Invoke("TimeShield", 15f);
-            
+            Invoke("TimeShield", 16f);
+            Debug.Log("ON shield");
         }
+
+
 
 
     }
     
     
 
-    private void toblick()
+    private void toblink()
     {
         uI_Updates.blinkImage();
+        Debug.Log("piscando shield");
     }
 
 
@@ -255,6 +258,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
     {
         shield = false;
         uI_Updates.shieldOff();
+        Debug.Log("end shield");
     }
 
 

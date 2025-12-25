@@ -67,14 +67,15 @@ public class UI_updates : MonoBehaviour
     IEnumerator ToBlink()
     {
         float t = .3f;
-        
-        for(int i=0; i<=20;i++)
+        imageLife.DOColor(Color.white, t);
+
+        for (int i=0; i<=9;i++)
         {
-            Debug.Log("white");
-            imageLife.DOColor(Color.white, t);
-            yield return new WaitForSeconds(t);
-            Debug.Log("yellow");
+            
             imageLife.DOColor(Color.yellow, t);
+            yield return new WaitForSeconds(t);
+            
+            imageLife.DOColor(Color.white, t);
             yield return new WaitForSeconds(t);
         }
         

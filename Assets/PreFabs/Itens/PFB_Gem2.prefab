@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 5614212373253962121}
   itemType: 2
-  value: 1
+  value: 5
 --- !u!1001 &8457633746576083248
 PrefabInstance:
   m_ObjectHideFlags: 0
