@@ -12,7 +12,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour , IDamagem
 {
     
-    public int lives, initLives;
+    public float lives, initLives, multiplyDamage =1f;
     public int checkPoint;
     [HideInInspector]
     public Transform checkPointPos;
@@ -138,8 +138,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
         }
 
         
-        speedVector.y = vSpeed;
-        charControl.Move(speedVector * Time.deltaTime);
+        
 
         
 
@@ -166,8 +165,9 @@ public class PlayerMove : MonoBehaviour , IDamagem
 
 
 
-       
-       
+        speedVector.y = vSpeed;
+        charControl.Move(speedVector * Time.deltaTime);
+
 
 
 
@@ -270,7 +270,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
             flashColors.ForEach(i => i.OnDamageFlash());
             PostProcessingManager.Instance.flashVignette();
             ShekeCamera.Instance.OnShakeCam(5f, 5f, .3f);
-            lives -= damage;
+            lives -= damage * multiplyDamage;
             uI_Updates.ValueLife(initLives, lives);
             PostProcessingManager.Instance.DownSaturation();
         }
@@ -287,7 +287,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
             ShekeCamera.Instance.OnShakeCam(5f, 5f, .6f);
             transform.DOMove(transform.position - dir, .2f);
             flashColors.ForEach(i => i.OnDamageFlash());
-            lives -= d;
+            lives -= d * multiplyDamage;
             uI_Updates.ValueLife(initLives, lives);
             PostProcessingManager.Instance.DownSaturation();
         }
@@ -328,6 +328,34 @@ public class PlayerMove : MonoBehaviour , IDamagem
         lives = initLives;
         uI_Updates.ValueLife(initLives, lives);
         PostProcessingManager.Instance.resetSaturation();
+    }
+
+
+    public void NewSpeed(float speed, float duration)
+    {
+        StartCoroutine(TimeToSpeed(speed, duration));
+        Debug.Log("new speed");
+    }
+
+    IEnumerator TimeToSpeed(float newSpeed, float duration)
+    {
+        float stdSpeed = speed;
+        speed *= newSpeed;
+        yield return new WaitForSeconds(duration);
+        speed = stdSpeed;
+    }
+
+
+    public void StrongForce(float force, float duration)
+    {
+        StartCoroutine(TimeToStrong(force, duration));
+    }
+
+    IEnumerator TimeToStrong(float force, float duration)
+    {
+        multiplyDamage = force;
+        yield return new WaitForSeconds(duration);
+        multiplyDamage = 1f;
     }
 
 

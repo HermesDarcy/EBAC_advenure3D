@@ -35,9 +35,11 @@ public class UI_updates : MonoBehaviour
     }
 
 
-    public void ValueLife(int max, int lf)
+    public void ValueLife(float max, float lf)
     {
-        
+        max = (int)max;
+        lf = (int)lf;
+
         if (lf < 0) lf = 0;
         if (tween != null) tween.Kill();
         tween = imageLife.DOFillAmount( (float) lf / max, .5f).SetEase(ease);

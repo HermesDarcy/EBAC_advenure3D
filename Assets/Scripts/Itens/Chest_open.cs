@@ -22,11 +22,7 @@ public class Chest_open : MonoBehaviour
         image.transform.localScale = Vector3.zero;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {

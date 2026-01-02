@@ -14,6 +14,7 @@ public class DestrucItemBase : MonoBehaviour, IDamagem
     public int maxDropItens = 10;
     public GameObject prefabItem;
     public GameObject toHide;
+    public ParticleSystem ballExplode;
     
     public Transform pointDropItens;
     private Collider collider;
@@ -22,6 +23,12 @@ public class DestrucItemBase : MonoBehaviour, IDamagem
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //ballExplode = GetComponent<ParticleSystem>();
+        if (ballExplode != null)
+        {
+            ballExplode.Pause();
+            //Debug.Log("achou particles");
+        }
         myPos = transform.position;
         
         collider = GetComponent<Collider>();
@@ -32,11 +39,7 @@ public class DestrucItemBase : MonoBehaviour, IDamagem
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
 
     [NaughtyAttributes.Button]
     private void OnShake()
@@ -130,6 +133,11 @@ public class DestrucItemBase : MonoBehaviour, IDamagem
     {
 
         yield return new WaitForEndOfFrame();
+        if (ballExplode != null)
+        {
+            ballExplode.Play();
+        }
+
         for (int i = 0; i <= amountToDropItens; i++)
         {
             ToDropItens();
@@ -137,5 +145,7 @@ public class DestrucItemBase : MonoBehaviour, IDamagem
             yield return new WaitForEndOfFrame();
         }
 
+       
+        
     }
 }
