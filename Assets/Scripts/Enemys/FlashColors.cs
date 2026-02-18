@@ -6,6 +6,7 @@ public class FlashColors : MonoBehaviour
     public MeshRenderer mesh;
     public SkinnedMeshRenderer skinnedMesh;
     public Color color = Color.red;
+    public string element = "_EmissionColor";
     private Color initColor ;
     [SerializeField]
     private float flashTime = .2f;
@@ -23,15 +24,23 @@ public class FlashColors : MonoBehaviour
     {
         if(tween.IsActive() == false && mesh != null)
         {
-            tween = mesh.material.DOColor(color, "_EmissionColor",flashTime).SetLoops(2,LoopType.Yoyo);
+            tween = mesh.material.DOColor(color, element, flashTime).SetLoops(2,LoopType.Yoyo);
         }
         else if (skinnedMesh != null && tween.IsActive() == false)
         {
-            tween = skinnedMesh.material.DOColor(color, "_EmissionColor", flashTime).SetLoops(2, LoopType.Yoyo);
+            tween = skinnedMesh.material.DOColor(color, element, flashTime).SetLoops(2, LoopType.Yoyo);
 
         }
 
     }
+
+    [NaughtyAttributes.Button]
+    protected virtual void ColorFlassh()
+    {
+        tween = mesh.material.DOColor(color, element, flashTime).SetLoops(2, LoopType.Yoyo);
+    }
+
+
 
 
     //Debug 

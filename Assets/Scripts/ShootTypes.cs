@@ -4,7 +4,7 @@ public class ShootTypes : ShootLimittPlayer
 {
     
     public KeyCode gum1, gum2, gum3;
-
+    public FXGunner gunner;
 
     
     public int shootType = 1;
@@ -80,6 +80,7 @@ public class ShootTypes : ShootLimittPlayer
                 ball.transform.position = localGum.transform.position;
                 ball.transform.localEulerAngles = Vector3.zero + Vector3.up * (i % 2 == 0 ? angle : -angle) * mult;
                 ball.transform.parent = null;
+                gunner.FXFlassh();
             }
 
             //GameObject bala = Instantiate(gum, pos, localGum.transform.rotation);

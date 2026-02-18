@@ -12,7 +12,7 @@ public class GumBase : MonoBehaviour
     public string targetTag;
     private Vector3 pos;
     public float nextTime;
-
+    
 
     private void Start()
     {
@@ -42,6 +42,7 @@ public class GumBase : MonoBehaviour
             shoot();
             nextTime = Time.time + timetoProjectils;
             //Debug.Log("key X");
+            
         }
     }
 

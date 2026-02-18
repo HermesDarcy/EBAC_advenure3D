@@ -14,6 +14,7 @@ public class UI_updates : MonoBehaviour
     public Image imageLife;
     public Ease ease;
     private Tween tween;
+    public Force_Shield forceShield;
 
     void Start()
     {
@@ -53,12 +54,14 @@ public class UI_updates : MonoBehaviour
 
     public void shieldOn()
     {
-        imageLife.color = Color.yellow;
+        imageLife.color = Color.blue;
+        forceShield.ShieldOn();
     }
 
     public void shieldOff()
     {
         imageLife.color = Color.white;
+        forceShield.ShieldOff();
     }
 
     public void blinkImage()
@@ -73,10 +76,11 @@ public class UI_updates : MonoBehaviour
 
         for (int i=0; i<=9;i++)
         {
-            
-            imageLife.DOColor(Color.yellow, t);
+            forceShield.ShieldOn();
+            imageLife.DOColor(Color.blue, t);
             yield return new WaitForSeconds(t);
             
+            forceShield.ShieldOff();
             imageLife.DOColor(Color.white, t);
             yield return new WaitForSeconds(t);
         }

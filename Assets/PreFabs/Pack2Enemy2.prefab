@@ -330,13 +330,16 @@ MonoBehaviour:
   easeBorn: 27
   animBase: {fileID: 6545758110754005027}
   flashColors: {fileID: 2515981356085410186}
-  AnimeTypes: 1
+  animeTypes: 1
   Collider: {fileID: 2021989951570415030}
   particlesOnAttack: {fileID: 888802724666674724}
   particleBalls: {fileID: 8699202864618305381}
+  playerpos: {fileID: 0}
+  faceToPlayer: 0
   wayPoints: []
   speed: 2
   minDist: 1
+  onDebug: 0
 --- !u!198 &8699202864618305381 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 654331489362503689, guid: 9f1feb471e6bde5468d8f72478aac477, type: 3}

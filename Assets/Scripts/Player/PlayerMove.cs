@@ -27,11 +27,12 @@ public class PlayerMove : MonoBehaviour , IDamagem
     public List<Collider> colliders = new List<Collider>();
     public KeyCode keyRun=KeyCode.LeftShift;
     public UI_updates uI_Updates;
+    
     private bool nonDeath = true;
     private bool onPause = false;
     private Rigidbody rb;
     private bool shield = false;
-
+    private bool isJump = false;
     public enum states
     {
         Init,
@@ -126,13 +127,34 @@ public class PlayerMove : MonoBehaviour , IDamagem
         vSpeed -= gravity * Time.deltaTime;
 
 
+
+
+
         if (charControl.isGrounded)
         {
+
+            if (isJump) // true
+            {
+                isJump = false;
+                playerAnim.SetTrigger("Land");
+            }
+            
             vSpeed = 0;
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                
+                
                 vSpeed = jumpForce;
-                onState = states.Jump;
+                
+                if(!isJump) // false
+                {
+                    
+                    playerAnim.SetTrigger("Jump");
+                    onState = states.Jump;
+                    isJump = true;
+                }
+                
+               
             }
 
         }
@@ -234,6 +256,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
             collision.gameObject.SetActive(false);
             shield = true;
             uI_Updates.shieldOn();
+            
             Invoke("toblink", 10f);
             Invoke("TimeShield", 16f);
             Debug.Log("ON shield");
@@ -258,6 +281,7 @@ public class PlayerMove : MonoBehaviour , IDamagem
     {
         shield = false;
         uI_Updates.shieldOff();
+        
         Debug.Log("end shield");
     }
 
