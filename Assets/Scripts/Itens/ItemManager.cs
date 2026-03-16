@@ -11,6 +11,8 @@ namespace Itens
         coin,
         lifes,
         gems,
+        lifePack,
+        checkPoint,
         item
     }
 
@@ -25,8 +27,11 @@ namespace Itens
         
         private void Start()
         {
-            ResetItens();
+            Invoke(nameof(ResetItens),.2f);
         }
+
+
+        
 
 
         
@@ -36,6 +41,11 @@ namespace Itens
             {
                 i.amount.value = 0;
             }
+            Addtype(itemType.coin, (int)SaveManager.Instance.savePlayer.coins);
+            Addtype(itemType.gems, (int)SaveManager.Instance.savePlayer.gems);
+            Addtype(itemType.lifes, (int)SaveManager.Instance.savePlayer.lives);
+
+
 
         }
 
@@ -43,6 +53,7 @@ namespace Itens
         {
             if (value < 0) return;
             itemSetups.Find(i => i.itemtype == type).amount.value += value;
+            Debug.Log(type);
         }
 
 

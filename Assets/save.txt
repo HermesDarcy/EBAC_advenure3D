@@ -1,0 +1,9 @@
+{
+    "name": "HDLU",
+    "level": 2,
+    "lives": 0,
+    "score": 0,
+    "coins": 2,
+    "gems": 1,
+    "lifePack": 0
+}

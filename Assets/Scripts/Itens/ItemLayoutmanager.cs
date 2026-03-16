@@ -23,9 +23,13 @@ namespace Itens
         {
             foreach(var it in ItemManager.Instance.itemSetups)
             {
-                var item  = Instantiate(prefabItem, itensLayout);
-                item.LoadItem(it);
-                setupsItens.Add(item);
+                if(it.itemtype != itemType.checkPoint)
+                {
+                    var item = Instantiate(prefabItem, itensLayout);
+                    item.LoadItem(it);
+                    setupsItens.Add(item);
+                }
+                
             }
         }
 
