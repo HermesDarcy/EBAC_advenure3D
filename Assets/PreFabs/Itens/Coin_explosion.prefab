@@ -110,6 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   value: 1
+  typeSfx: 1
   collider: {fileID: 0}
 --- !u!64 &3190348485681188265
 MeshCollider:

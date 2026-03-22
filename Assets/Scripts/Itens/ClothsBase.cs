@@ -8,6 +8,7 @@ namespace Cloths
     {
 
         public RoupasType type;
+        //public SfxTypes typeSfx;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -20,11 +21,15 @@ namespace Cloths
         protected virtual void onColleted()
         {
             //Debug.Log("colleted especial");
+            //MyEffect();
             Invoke("HideThis",.1f);
         }
-
-
-
+        /*
+        protected virtual void MyEffect()
+        {
+            SfxPool.Instance.Play(typeSfx);
+        }
+        */
 
 
         private void HideThis()

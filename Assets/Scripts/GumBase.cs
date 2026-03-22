@@ -10,9 +10,9 @@ public class GumBase : MonoBehaviour
     public KeyCode keyGum;
     public float timetoProjectils = 0.2f;
     public string targetTag;
-    private Vector3 pos;
+    [HideInInspector]
     public float nextTime;
-    
+    private Vector3 pos;
 
     private void Start()
     {

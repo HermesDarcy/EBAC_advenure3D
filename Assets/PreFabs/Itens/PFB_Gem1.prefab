@@ -49,6 +49,7 @@ MonoBehaviour:
   Collider: {fileID: 531802438282004172}
   itemType: 2
   value: 1
+  typeSfx: 3
 --- !u!65 &531802438282004172
 BoxCollider:
   m_ObjectHideFlags: 0

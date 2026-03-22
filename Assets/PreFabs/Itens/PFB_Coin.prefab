@@ -70,6 +70,7 @@ MonoBehaviour:
   Collider: {fileID: 2158963869576329893}
   itemType: 0
   value: 1
+  typeSfx: 1
 --- !u!1001 &9021509543283403125
 PrefabInstance:
   m_ObjectHideFlags: 0

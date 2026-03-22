@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using Play.HD.Singleton;
 using System.Collections;
-using UnityEditor.Rendering.Analytics;
+
 
 public class PostProcessingManager : Singleton<PostProcessingManager>
 {

@@ -1,6 +1,7 @@
-using UnityEngine;
-using Play.HD.Singleton;
 using Itens;
+using Play.HD.Singleton;
+using Unity.VisualScripting;
+using UnityEngine;
 
 
 public class Item_exploder : MonoBehaviour
@@ -9,9 +10,10 @@ public class Item_exploder : MonoBehaviour
         
     public itemType itemType;
     public int value = 1;
+    public SfxTypes typeSfx;
     [SerializeField]
     private Collider collider;
-
+    
     
 
 
@@ -42,14 +44,13 @@ public class Item_exploder : MonoBehaviour
         //this.gameObject.SetActive(false);
         collider.enabled = false;
         ItemManager.Instance.Addtype(itemType, value);
-
+        MyEffect();
         Invoke("HideThis", .2f);
     }
 
-
     protected virtual void MyEffect()
     {
-
+        SfxPool.Instance.Play(typeSfx);
     }
 
 

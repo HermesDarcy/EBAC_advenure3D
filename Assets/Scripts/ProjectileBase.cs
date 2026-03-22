@@ -9,6 +9,7 @@ public class ProjectileBase : MonoBehaviour
     public float speed = 35f;
     public int toDamage = 1;
     public string targetTag;
+    public SfxTypes sfxTypes;
 
 
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class ProjectileBase : MonoBehaviour
             var damageable = collision.transform.GetComponent<IDamagem>();
             if (damageable != null)
             {
+                MyEffect();
                 Vector3 dir = transform.position - collision.transform.position;
                 dir.Normalize();
                 dir.y = 0;
@@ -60,7 +62,12 @@ public class ProjectileBase : MonoBehaviour
     }
 
 
-    
+
+    protected virtual void MyEffect()
+    {
+        SfxPool.Instance.Play(sfxTypes);
+    }
+
 
 
 }

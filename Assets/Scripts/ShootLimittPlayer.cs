@@ -4,9 +4,9 @@ public class ShootLimittPlayer : GumBase
 {
     public int maxShoot = 5;
     public float timeCharge = 1f;
-
+    [HideInInspector]
     public float currentShoot = 0;
-    private bool recharge = false;
+    //private bool recharge = false;
 
     protected virtual void Shoot()
     {

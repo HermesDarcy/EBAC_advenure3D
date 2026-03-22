@@ -13,6 +13,7 @@ namespace Itens
         public Collider Collider;
         public itemType itemType;
         public int value=1;
+        public SfxTypes typeSfx;
 
 
         private void OnTriggerEnter(Collider other)
@@ -28,14 +29,14 @@ namespace Itens
             //this.gameObject.SetActive(false);
             Collider.enabled = false;
             ItemManager.Instance.Addtype(itemType, value);
-
+            MyEffect();
             Invoke("HideThis", .5f);
         }
 
 
         protected virtual void MyEffect()
         {
-
+            SfxPool.Instance.Play(typeSfx);
         }
 
 

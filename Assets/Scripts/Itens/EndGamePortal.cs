@@ -8,15 +8,24 @@ public class EndGamePortal : MonoBehaviour
     public List<GameObject> toHideObjs;
     public int nextLevel = 1;
     public bool ativate = false;
-
+    public GameObject boss;
+    public GameObject totem;
 
     private void Awake()
     {
         //toHideObjs.ForEach(obj => obj.transform.localScale = Vector3.one*2f);
         toHideObjs.ForEach(x => x.SetActive(false));
+        totem.SetActive(false);
     }
 
-
+   void Update()
+    {
+        if(boss == null)
+        {
+            totem.SetActive(true);
+            //NoHideObjs();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

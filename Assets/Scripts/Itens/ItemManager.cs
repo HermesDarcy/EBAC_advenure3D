@@ -1,7 +1,6 @@
 using UnityEngine;
 using Play.HD.Singleton;
-using UnityEditor.UIElements;
-using NUnit.Framework;
+
 using System.Collections.Generic;
 
 namespace Itens

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  typeSfx: 4
   changeMulti: 0.2
   durationForce: 5
 --- !u!136 &8200123927573071888

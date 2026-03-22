@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootTypes : ShootLimittPlayer
@@ -5,12 +6,10 @@ public class ShootTypes : ShootLimittPlayer
     
     public KeyCode gum1, gum2, gum3;
     public FXGunner gunner;
-
-    
+    public SfxTypes sfxTypes;
     public int shootType = 1;
-    [SerializeField]
+    
     private int shootAmont = 1;
-    [SerializeField]
     private float angle = 0f;
 
    
@@ -51,6 +50,11 @@ public class ShootTypes : ShootLimittPlayer
 
 
 
+    protected virtual void MyEffect()
+    {
+        SfxPool.Instance.Play(sfxTypes);
+    }
+
     protected override void shoot()
     {
 
@@ -81,6 +85,7 @@ public class ShootTypes : ShootLimittPlayer
                 ball.transform.localEulerAngles = Vector3.zero + Vector3.up * (i % 2 == 0 ? angle : -angle) * mult;
                 ball.transform.parent = null;
                 gunner.FXFlassh();
+                MyEffect();
             }
 
             //GameObject bala = Instantiate(gum, pos, localGum.transform.rotation);
